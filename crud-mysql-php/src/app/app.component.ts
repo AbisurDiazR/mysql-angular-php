@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 //modulos para el comportamiento de la aplicacion
 import { UsuariosService } from './services/usuarios.service';
@@ -8,7 +8,7 @@ import { UsuariosService } from './services/usuarios.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'crud-mysql-php';
 
   usuarios = null;
@@ -20,23 +20,22 @@ export class AppComponent {
     email: null
   }
 
-  constructor(private usuariosService: UsuariosService){
-  }
+  constructor(private usuariosServicio: UsuariosService) { }
 
-  ngOnInit(){
+  ngOnInit() {
     this.obtenerUsuarios();
   }
 
-  obtenerUsuarios(){
-    this.usuariosService.obtenerUsuarios().subscribe(
+  obtenerUsuarios() {
+    this.usuariosServicio.obtenerUsuarios().subscribe(
       result => this.usuarios = result
     );
   }
 
-  altaUsuario(){
-    this.usuariosService.altaUsuario(this.usuario).subscribe(
+  altaUsuario() {
+    this.usuariosServicio.altaUsuario(this.usuario).subscribe(
       datos => {
-        if(datos['resultado'] == 'ok'){
+        if(datos['resultado'] == 'OK') {
           alert(datos['mensaje']);
           this.obtenerUsuarios();
         }
@@ -44,10 +43,10 @@ export class AppComponent {
     );
   }
 
-  bajaUsuario(idUsuario){
-    this.usuariosService.bajaUsuario(idUsuario).subscribe(
+  bajaUsuario(idUsuario) {
+    this.usuariosServicio.bajaUsuario(idUsuario).subscribe(
       datos => {
-        if(datos['resultado']=='ok'){
+        if(datos['resultado'] == 'OK') {
           alert(datos['mensaje']);
           this.obtenerUsuarios();
         }
@@ -55,10 +54,10 @@ export class AppComponent {
     );
   }
 
-  editarUsuario(){
-    this.usuariosService.editarUsuario(this.usuario).subscribe(
+  editarUsuario() {
+    this.usuariosServicio.editarUsuario(this.usuario).subscribe(
       datos => {
-        if(datos['resultado']=='ok'){
+        if(datos['resultado'] == 'OK') {
           alert(datos['mensaje']);
           this.obtenerUsuarios();
         }
@@ -66,14 +65,14 @@ export class AppComponent {
     );
   }
 
-  seleccionarUsuario(idUsuario){
-    this.usuariosService.seleccionarUsuario(idUsuario).subscribe(
+  seleccionarUsuario(idUsuario) {
+    this.usuariosServicio.seleccionarUsuario(idUsuario).subscribe(
       result => this.usuario = result[0]
     );
   }
 
-  hayRegistros(){
-    if (this.usuarios == null) {
+  hayRegistros() {
+    if(this.usuarios == null) {
       return false;
     } else {
       return true;
